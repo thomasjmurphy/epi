@@ -1,1 +1,32 @@
 
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<set>
+#include<stdexcept>
+using namespace std;
+
+int StringToInt(string s)
+{
+    int ret = 0;
+    for(int i =s.length()-1;i>=0;i--)
+    {
+        if(s[i] < 48 || s[i] > 57){throw invalid_argument("not a number");}
+        ret = ret + pow(10,s.length()-1-i)*(s[i]-48);
+    }
+    return ret;
+}
+
+string IntToString(int i)
+{
+    for(int j = 0;j<log10((double)i);j++)
+    {
+        
+    }
+}
+
+int main()
+{
+    cout  << StringToInt("12a34");
+    return 0;
+}
