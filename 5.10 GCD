@@ -1,1 +1,22 @@
 
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<set>
+#include<stdexcept>
+using namespace std;
+
+int gcd(int a, int b)
+{
+    if(a == b){return a;}
+    if(a > b){a = a+b; b = a-b; a = a-b;}
+    {
+        return gcd(a,b-a);
+    }
+}
+
+int main()
+{
+    cout << gcd(26,39);
+    return 0;
+}
