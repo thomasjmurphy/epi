@@ -1,0 +1,70 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<set>
+#include<stdexcept>
+#include<string>
+using namespace std;
+
+string intToCode(int num)
+{
+    string s = "";
+    char temp = 't';
+    int len = 0;
+    while(num)
+    {
+        temp = (num%2) + 48;
+        s.insert(s.begin(),temp);
+        num = num >> 1;
+        len+=1;
+    }
+    string zeros(len-1,'0');
+    s.insert(0,zeros);
+    return s;
+}
+
+string encode(vector<int> vec)
+{
+    string big = "";
+    for(int i = 0;i<vec.size();i++)
+    {
+        big+= intToCode(vec[i]);
+    }
+    return big;
+}
+
+vector<int> decode(string code)
+{
+    vector<int> vec;
+    bool countZeros = 1;
+    int numOfZeros =  0;
+    for(int i = 0;i<code.length();i++)
+    {
+        if(countZeros)
+        {
+            if(code[i] == 0)
+            {
+                numOfZeros++;
+            }
+            else
+            {
+                countZeros = 0;
+                numOfZeros--;
+            }
+        }
+        else
+        {
+            
+        }
+        
+    }
+}
+
+
+
+int main()
+{
+    vector<int> nums = {1,2,3,4};
+    cout << encode(nums);
+    return 0;
+}
