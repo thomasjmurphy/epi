@@ -1,0 +1,26 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<set>
+#include<stdexcept>
+#include<string>
+using namespace std;
+
+int bitAdd(int a, int b)
+{
+    if((a & b) == 0){return a ^ b;}
+    else
+    {
+        return bitAdd((a & b) << 1, a ^ b);
+    }
+}
+
+
+
+
+int main()
+{
+    cout << bitAdd(17,21);
+    return 0;
+}
+
