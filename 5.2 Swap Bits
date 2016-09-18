@@ -1,0 +1,52 @@
+
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<set>
+#include<stdexcept>
+#include<string>
+using namespace std;
+
+int bitSwap(int n, int i, int j)
+{
+    if(j < i){i = i+j; j = i-j; i = i-j;}
+    int ret = 0;
+    int temp = n;
+    int iBit = 0;
+    int jBit = 0;
+    for(int k = 0; k <= j; k++)
+    {
+        if(k == i){iBit = temp%2;}
+        if(k == j){jBit = temp%2;}
+        temp = temp >> 1;
+    }
+    cout << iBit << endl;
+    cout << jBit << endl;
+    temp = n;
+    for(int k = 0;k <= j; k++)
+    {
+        ret = ret << 1;
+        if(k == i){ret += jBit;}
+        if(k == j){ret += iBit;}
+        if(k != i && k!= j)
+        {
+            ret += temp%2;
+        }
+        temp = temp>>1;
+    }
+    if(i == 0 && jBit == 0){ret = ret << 1;} //correcting since shifting a zero is still a zero
+    while(temp > 0)
+    {
+        ret += temp%2;
+        ret = ret << 1;
+        temp = temp >> 1;
+        
+    }
+    return ret;
+}
+
+int main()
+{
+    cout << bitSwap(21,0,3);
+    return 0;
+}
