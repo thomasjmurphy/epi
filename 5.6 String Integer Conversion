@@ -1,9 +1,9 @@
-
 #include<vector>
 #include<iostream>
 #include<cmath>
 #include<set>
 #include<stdexcept>
+#include<string>
 using namespace std;
 
 int StringToInt(string s)
@@ -17,16 +17,19 @@ int StringToInt(string s)
     return ret;
 }
 
-string IntToString(int i)
+string IntToString(int n)
 {
-    for(int j = 0;j<log10((double)i);j++)
+   string s = "";
+    while(n >0)
     {
-        
+        s.insert(s.begin(),((char)(n%10) + 48));
+        n = n/10;
     }
+    return s;
 }
 
 int main()
 {
-    cout  << StringToInt("12a34");
+    cout  << StringToInt("315698");
     return 0;
 }
