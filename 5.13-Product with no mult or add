@@ -15,12 +15,28 @@ int bitAdd(int a, int b)
     }
 }
 
+int bitMult(int a, int b)
+{
+    int count = 0;
+    int temp1 = a;
+    int temp2 = b;
+    int sum = 0;
+    while(temp2 >0)
+    {
+        if(temp2%2 == 1)
+        {
+            sum += (temp1 << count);
+        }
+        count++;       
+        temp2 = temp2 >> 1;
+    }
+    return sum;
+}
 
 
 
 int main()
 {
-    cout << bitAdd(17,21);
+    cout << bitMult(8,11);
     return 0;
 }
-
