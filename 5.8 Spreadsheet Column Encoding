@@ -1,0 +1,30 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<set>
+#include<stdexcept>
+#include<string>
+using namespace std;
+
+//very similar to previous problem. Take previous function and choose
+//parameters 10 and 26 and then add one to the terms in the sum due 
+//to the fact that "A" = 1 now instead of 0 for the base conversions.
+int ssId(string s)
+{
+    int sum = 0;
+    string ret = "";
+    for(int i = s.length()-1;i>=0;i--)
+    {
+        if(s[i] >= 65 && s[i] <= 90)
+        {
+            sum = sum + pow(26,s.length()-1-i)*(s[i] - 64); 
+        }
+    }
+    return sum;
+}
+
+int main()
+{
+    cout << ssId("ABC");
+    return 0;
+}
