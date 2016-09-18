@@ -1,0 +1,62 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<set>
+#include<stdexcept>
+#include<string>
+using namespace std;
+
+class Point
+{
+public:
+    int x;
+    int y;
+    Point(int x, int y) : x(x), y(x) {}
+};
+
+class Rect
+{
+public:
+    Point p;
+    int h;
+    int w;
+    Rect(int x, int y, int h, int w) : h(h), w(w), p(Point(x,y)) {}
+};
+
+Rect Intersect(Rect r1, Rect r2)
+{
+    int LLx = 0;
+    int LLy = 0;
+    int w = 0;
+    int h = 0;
+    
+    bool x1 = (r2.p.x >= r1.p.x && r2.p.x <= r1.p.x+r1.w);
+    bool x2 = (r1.p.x >= r2.p.x && r1.p.x <= r2.p.x+r2.w);
+    bool y1 = (r2.p.y >= r1.p.y && r2.p.y <= r1.p.y+r1.h);
+    bool y2 = (r1.p.y >= r2.p.y && r1.p.y <= r2.p.y+r2.h);
+    
+    if((x1 || x2) && (y1 || y2)){cout  << "they intersect";}
+    else{cout << "no intersection"; return Rect(0,0,0,0);}
+    
+    if(x1){LLx = r2.p.x;}
+    if(x2){LLx = r1.p.x;}
+    if(y1){LLy = r2.p.y;}
+    if(y2){LLy = r1.p.y;}
+    
+    if(x1){w = min(r1.w - (r2.p.x-r1.p.x),r2.w);}
+    if(x2){w = min(r2.w - (r1.p.x-r2.p.x),r1.w);}
+    if(y1){h = min(r1.h - (r2.p.y-r1.p.y),r2.h);}
+    if(y2){h = min(r2.h - (r1.p.y-r2.p.y),r1.h);}
+    Point LL(LLx,LLy);
+    Rect ret(LLx,LLy,w,h);
+    return ret;
+}
+
+int main()
+{
+    Rect rec1(0,0,3,4);
+    Rect rec2(2,-1,5,5);
+    Rect inter = Intersect(rec1,rec2);
+    cout << inter.p.x << inter.p.y << inter.w << inter.h;
+    return 0;
+}
