@@ -6,6 +6,17 @@
 #include<string>
 using namespace std;
 
+int stringToBin(string s)
+{
+    int ret = 0;
+    for(int i = s.length()-1;i>=0;i--)
+    {
+        ret+= (s[i]-48)*pow(2,s.length()-1-i);
+        
+    }
+    return ret;
+}
+
 string intToCode(int num)
 {
     string s = "";
@@ -36,35 +47,33 @@ string encode(vector<int> vec)
 vector<int> decode(string code)
 {
     vector<int> vec;
-    bool countZeros = 1;
-    int numOfZeros =  0;
     for(int i = 0;i<code.length();i++)
     {
-        if(countZeros)
+        for(int j = i;j<code.length();j++)
         {
-            if(code[i] == 0)
+            if(code[j] != '0')
             {
-                numOfZeros++;
-            }
-            else
-            {
-                countZeros = 0;
-                numOfZeros--;
+                vec.push_back(stringToBin(code.substr(j,j-i+1)));
+                i = 2*j-i;
+                break;
             }
         }
-        else
-        {
-            
-        }
-        
     }
+    return vec;
 }
-
-
 
 int main()
 {
     vector<int> nums = {1,2,3,4};
-    cout << encode(nums);
+    cout << encode(nums) << endl;
+    vector<int> vec = decode(encode(nums));
+    
+    for(int i =0 ;i<4;i++)
+    {
+        cout << vec[i] << endl;
+    }
+    
     return 0;
 }
+//Common errors: I was using substr wrong. I assumed that substr(3,6) meant
+//to take the values from 3 to 6. No. It means take the 6 letters starting at 3.
