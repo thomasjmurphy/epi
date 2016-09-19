@@ -1,0 +1,77 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<set>
+#include<stdexcept>
+#include<string>
+using namespace std;
+
+void printVec(vector<int> vec)
+{
+    for(int i =0 ;i<vec.size();i++)
+    {
+        cout << vec[i];
+    }
+    cout << endl;
+}
+
+
+//Sort the elements so that for the fixed element A(i) which is given, we have that
+//all the elements before A(i) are less than A(i) but they themselves are not necessarily
+//sorted. Then the same for after/larger.
+
+vector<int> sortFixedi(vector<int> &vec, int k)
+{
+    int lowCount = 0;
+    for(int i = 0;i<vec.size();i++)
+    {
+        if(vec[i] < vec[k]){lowCount++;}
+    }
+    vector<int> ret;
+    ret.resize(vec.size());
+    for(int i = 0;i<vec.size();i++)
+    {
+        ret[i] = 0;
+        
+    }
+    cout << "zeros"; printVec(ret);
+    int mid = lowCount;
+    int front = 0;
+    int back = vec.size()-1;
+    for(int i = 0;i<vec.size();i++)
+    {
+        if(vec[i] < vec[k])
+        {
+            ret[front] = vec[i];
+            front++;
+            printVec(ret);
+        }
+        if(vec[i] == vec[k])
+        {
+            ret[mid] = vec[i];
+            mid++;
+            printVec(ret);
+        }
+        if(vec[i] > vec[k])
+        {
+            ret[back] = vec[i];
+            back--;
+            printVec(ret);
+        }
+    }
+    return ret;
+}
+
+int main()
+{
+    vector<int> vec = {2,4,6,9,6,1,2,2,1,4,3};
+    vector<int> ret = sortFixedi(vec,9);
+    for(int i = 0;i<vec.size();i++)
+    {
+        cout << ret[i];
+    }
+    return 0;
+}
+
+//common mistakes. The insert function for vector adds a new element to the vector
+//i.e. the vector is now one size larger than before. 
