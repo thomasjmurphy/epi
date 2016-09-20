@@ -1,0 +1,51 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+using namespace std;
+
+vector<int> next(vector<int> vec)
+{
+    vector<int> ret = vec;
+    int min = INT_MAX;
+    int mini = 0;
+    int minj = 0;
+    for(int i = vec.size()-1;i>=0;i--)
+    {
+        for(int j = i; j < vec.size();j++)
+        {
+            if(vec[j] > vec[i] && vec[j] - vec[i] < min)
+            {
+                min = vec[j] - vec[i];
+                mini = i;
+                minj = j;
+            }
+        }
+        if(min < INT_MAX)
+        {
+            ret[mini] = vec[minj];
+            ret[minj] = vec[mini];
+            break;
+        }
+    }
+    sort(ret.begin()+mini+1,ret.end());
+    return ret;
+}
+
+
+int main()
+{
+    vector<int> vec = {1,0,3,2};
+    vector<int> p = next(vec);
+    for(int i = 0;i<vec.size();i++)
+    {
+        cout << p[i];
+    }
+    
+    return 0;
+}
+
