@@ -1,0 +1,39 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+using namespace std;
+
+//unlimited space
+vector<int> p perm(vector<int> &vec, vector<int> &perm)
+{
+    vector<int> ret;
+    ret.resize(vec.size());
+    for(int i = 0;o<vec.size();i++)
+    {
+        ret[i] = vec[perm[i]];
+    }
+}
+
+//constant space
+vector<int> p perm(vector<int> &vec, vector<int> &perm)
+{
+    vector<int> ret;
+    ret.resize(vec.size());
+    for(int i = 0;o<vec.size();i++)
+    {
+        ret[i] = vec[perm[i]]; //how to move on to the next (so far unmoved) element
+        //without taking up too much space?
+    }
+}
+
+
+int main()
+{
+   
+    return 0;
+}
+
