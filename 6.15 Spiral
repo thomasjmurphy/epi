@@ -1,0 +1,63 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+using namespace std;
+
+void spiral(vector<vector<int>> mat)
+{
+    if(mat.size() == 1)
+    {
+        cout << mat[0][0];
+    }
+    if(mat.size() == 2)
+    {
+        cout << mat[0][0] << mat[0][1] << mat [1][1] << mat[1][0];
+    }
+    if(mat.size() > 2)
+    {
+        for(int i = 0;i<mat.size();i++)
+        {
+            cout << mat[0][i];
+        }
+        for(int i = 1;i<mat.size();i++)
+        {
+            cout << mat[i][mat.size()-1];
+        }
+        for(int i = mat.size()-2;i>=0;i--)
+        {
+            cout << mat[mat.size()-1][i];
+        }
+        for(int i = mat.size()-2;i>0;i--)
+        {
+            cout << mat[i][0];
+        }
+        
+        
+        for(int i =1;i<mat.size()-1;i++)
+        {
+            mat[i].pop_back();
+            mat[i].erase(mat[i].begin());
+        }
+        
+        mat.erase(mat.begin());
+        mat.pop_back();
+        spiral(mat);
+        
+    }
+}
+
+
+int main()
+{
+   
+    vector<vector<int>> mat = {{1,2,3},{4,5,6},{7,8,9}};
+    spiral(mat);
+    return 0;
+}
+ //errors use pop to eliminate last element of vector and erase for all others.
+//just don't use erase(vec.end())
