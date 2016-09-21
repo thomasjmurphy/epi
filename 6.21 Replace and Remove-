@@ -1,0 +1,51 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+using namespace std;
+
+
+void repRem(string &s)
+{
+    int aCount = 0;
+    int count = 0;
+    for(int i=0;i<s.length();i++)
+    {
+       if(s[i] != 'b')
+       {
+           s[count] = s[i];
+           count++;
+       }
+       if(s[i] == 'a')
+       {
+           aCount++;
+       }
+    }
+    int aCount1 = aCount;
+    for(int i = count-1 + aCount1; i>=0;i--)
+    {
+        if(s[count-1+aCount1 == 'a'])
+        {
+            s[i] = 'd';
+            i--;
+            s[i] = 'd';
+        }
+        aCount--;
+    }
+    
+}
+
+
+
+int main()
+{
+    string s = "abcbbbbbcdadbababdada";
+    repRem(s);
+    cout << s;
+    
+    return 0;
+}
