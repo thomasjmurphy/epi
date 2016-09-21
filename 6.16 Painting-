@@ -1,0 +1,37 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+using namespace std;
+
+struct pair
+{
+    int x;
+    int y;
+    pair(int x, int y) : x(x), y(y) {}
+};
+
+void enqueue(vector<vector<bool>> mat, int x, int y)
+{
+    
+}
+
+vector<vector<bool>> flip(vector<vector<bool>> mat, int x, int y)
+{
+    bool color = mat[x][y];
+    vector<vector<bool>> ret = mat;
+    ret[x][y] = !color;
+    queue<pair> q;
+    if(x > 0 && ret[x-1][y] == color){q.emplace(pair(x-1,y);)
+    
+}
+
+int main()
+{
+   
+    return 0;
+}
