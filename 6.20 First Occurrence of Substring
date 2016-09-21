@@ -1,0 +1,36 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+using namespace std;
+
+int firstOcc(string t, string s) //Find first occurence of string s in text t
+{
+    for(int i = 0;i<t.length();i++)
+    {
+        if(t[i] == s[0])
+        {
+            for(int j = i+1;j<i+s.length();j++)
+            {
+                if(s[j-i] != t[j])
+                {
+                    break;
+                }
+                if(j == i+s.length()-1)
+                {
+                    return i;
+                }
+            }
+        }
+    }
+    return -1;
+}
+int main()
+{
+   cout << firstOcc("the cat is in the hat","in");
+    return 0;
+}
