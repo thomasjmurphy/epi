@@ -1,0 +1,49 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+using namespace std;
+
+
+void phone(map<int,string> m)
+{
+    string current = "";
+    map<int,int> mCurrent;
+    map<int,int> mSize;
+    int total = 1;
+    for(map<int,string>::iterator it = map.begin();it != map.end();it++)
+    {
+        mSize[it->first] = m[it->second.length()];
+        total*= it->second.length();
+    }
+    for(int i =0;i<total;i++)
+    {
+        for(map<int,string>::iterator it = map.begin();it != map.end();it++)
+        {
+            current+= m[it->second[mCurrent[it->first]]];
+            if(mCurrent[it->first] < mSize[it->first]-1)
+            {
+                mCurrent[it->first]++;
+            }
+            else
+            {
+                mCurrent[it->first] = 0;
+                mCurrent[(it+1)->first]++; //don't need to worry about final addition b/c of total
+            }
+        }
+        
+    }
+}
+
+int main()
+{
+ 
+    
+    return 0;
+}
