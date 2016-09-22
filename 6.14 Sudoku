@@ -1,0 +1,49 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+using namespace std;
+
+
+bool sudoku(vector<vector<int>> mat)
+{
+    vector<bool> vec(3,0);
+    for(int i = 0;i<mat.size();i++)
+    {
+        fill(vec.begin(),vec.end(),0);
+        for(int j = 0;j<mat.size();j++)
+        {
+            if(mat[i][j] > 0 && vec[mat[i][j]] == 1)
+            {
+                return false;
+            }
+            if(mat[i][j] > 0){vec[mat[i][j]] = 1;}
+        }
+    }
+    
+    for(int j = 0;j<mat.size();j++)
+    {
+        fill(vec.begin(),vec.end(),0);
+        for(int i = 0;i<mat.size();i++)
+        {
+            if(mat[i][j] > 0 && vec[mat[i][j]] == 1)
+            {
+                return false;
+            }
+            if(mat[i][j] > 0){vec[mat[i][j]] = 1;}
+        }
+    }
+    return true;
+}
+
+
+int main()
+{
+    vector<vector<int>> mat = {{1,2,2},{0,1,2},{3,0,0}};
+    cout << sudoku(mat);
+    return 0;
+}
