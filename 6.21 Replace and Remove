@@ -25,27 +25,35 @@ void repRem(string &s)
            aCount++;
        }
     }
+    for(int i=count;i<s.length();i++)
+    {
+        s[i] = '-';
+    }
+    
     int aCount1 = aCount;
     for(int i = count-1 + aCount1; i>=0;i--)
     {
-        if(s[count-1+aCount1 == 'a'])
+        if(s[i-aCount] == 'a')
         {
             s[i] = 'd';
             i--;
             s[i] = 'd';
+            aCount--;
         }
-        aCount--;
+        else
+        {
+            s[i] = s[i-aCount];
+        }
     }
-    
 }
+    
 
 
 
 int main()
 {
-    string s = "abcbbbbbcdadbababdada";
+    string s = "abcbbacbadbaba";
     repRem(s);
     cout << s;
-    
     return 0;
 }
