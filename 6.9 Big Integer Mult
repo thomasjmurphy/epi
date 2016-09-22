@@ -1,0 +1,48 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+using namespace std;
+
+string bigInt(string a, string b)
+{
+    int size = a.length()+b.length();
+    string ret = "";
+    vector<int> vec;
+    vec.resize(size);
+    for(int i = a.length()-1;i>=0;i--)
+    {
+        for(int j = b.length()-1;j>=0;j--)
+        {
+            vec[i+j+1] += ((int)(a[i]-48)*(int)(b[j]-48))%10;
+            vec[i+j]   += ((int)(a[i]-48))*((int)(b[j]-48))/10;
+        }
+    }
+    for(int i = size-1;i>=1;i--)
+    {
+        while(vec[i] > 9)
+        {
+            vec[i] -= 10;
+            vec[i-1]++;
+        }
+    }
+    for(int i = 0;i<size;i++)
+    {
+        ret+=(vec[i]+48);
+    }
+    return ret;
+}
+
+int main()
+{
+    string a = "123";
+    string b = "456";
+    cout << bigInt(a,b);
+    return 0;
+}
