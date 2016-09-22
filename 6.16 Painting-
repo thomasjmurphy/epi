@@ -1,4 +1,5 @@
 #include<vector>
+#include<queue>
 #include<iostream>
 #include<cmath>
 #include<climits>
@@ -8,30 +9,60 @@
 #include<unordered_map>
 using namespace std;
 
-struct pair
+struct p
 {
     int x;
     int y;
-    pair(int x, int y) : x(x), y(y) {}
+    p(int x, int y) : x(x), y(y) {}
 };
 
-void enqueue(vector<vector<bool>> mat, int x, int y)
+void enqueue(vector<vector<bool>> &mat, queue<p> &q)
 {
+    if(q.empty()){return;}
+    bool color = mat[q.front().x][q.front().y];
     
+    if(q.front().x > 0 && mat[q.front().x-1][q.front().y] == color) {q.emplace(p(q.front().x-1,q.front().y));}
+    if(q.front().y > 0 && mat[q.front().x][q.front().y-1] == color) {q.emplace(p(q.front().x,q.front().y-1));}
+    if(q.front().x < mat.size()-1 && mat[q.front().x+1][q.front().y] == color) {q.emplace(p(q.front().x+1,q.front().y));}
+    if(q.front().y < mat.size()-1 && mat[q.front().x][q.front().y+1] == color) {q.emplace(p(q.front().x,q.front().y+1));}
+    mat[q.front().x][q.front().y] = !(color);
+    
+    q.pop();
+    enqueue(mat,q);
 }
 
 vector<vector<bool>> flip(vector<vector<bool>> mat, int x, int y)
 {
-    bool color = mat[x][y];
     vector<vector<bool>> ret = mat;
-    ret[x][y] = !color;
-    queue<pair> q;
-    if(x > 0 && ret[x-1][y] == color){q.emplace(pair(x-1,y);)
-    
+    queue<p> q;
+    q.emplace(p(x,y));
+    enqueue(ret, q);
+    return ret;
 }
 
 int main()
 {
+   vector<vector<bool>> mat = {{1,1,1},{0,1,0},{1,0,0}};
    
+    for(int i = 0;i<mat.size();i++)
+    {
+        for(int j = 0;j<mat.size();j++)
+    {
+        cout << mat[i][j];
+    }
+        cout << endl;
+    }
+    
+     mat = flip(mat,2,1);
+     for(int i = 0;i<mat.size();i++)
+    {
+        for(int j = 0;j<mat.size();j++)
+    {
+        cout << mat[i][j];
+    }
+         cout << endl;
+    }
+    
+    
     return 0;
 }
