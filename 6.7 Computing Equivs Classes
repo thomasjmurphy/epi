@@ -49,11 +49,9 @@ set<set<int>> equiv(vector<int> a, vector<int> b, int n)
     int hold1 = 0;
     for(int i = 0;i<a.size();i++)
     {
-        if(seen[i] == 1){cout << i << "seen" << endl;}
         current.clear();
         if(seen[i] == 0)
         {
-            cout<< "ey" << i << endl;
             seen[i] = 1;
             current.insert(a[i]);
             current.insert(b[i]);
