@@ -1,0 +1,52 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+using namespace std;
+
+struct node
+{
+    int val;
+    node* next;
+    node(int val) : val(val), next(NULL) {}
+};
+
+node* medianCircular(node* n)
+{
+    while(n->next->val > n->val)
+    {
+        n = n->next;
+    }
+    n = n->next;
+    node* t = n;
+    while(n->next->next->val > n->val)
+    {
+        n = n->next->next;
+        t = t->next;
+    }
+    return t;
+}
+
+
+int main()
+{
+    node* n1 = new node(1);
+    node* n2 = new node(2);
+    node* n3 = new node(3);
+    node* n4 = new node(4);
+    node* n5 = new node(5);
+    node* n6 = new node(6);
+    n1->next = n2;
+    n2->next = n3;
+    n3->next = n4;
+    n4->next = n5;
+    n5->next = n6;
+    n6->next = n1;
+    
+    cout << medianCircular(n2)->val;
+    return 0;
+}
