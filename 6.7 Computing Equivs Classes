@@ -1,0 +1,113 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+using namespace std;
+
+
+
+void print(set<int> s)
+{
+    for(set<int>::iterator it = s.begin(); it != s.end(); it++)
+    {
+        cout << (*it);
+    }
+}
+
+void print(set<set<int>> s)
+{
+    for(set<set<int>>::iterator it = s.begin(); it != s.end(); it++)
+    {
+        print(*it); cout << endl;
+    }
+}
+
+int inverse(vector<int> vec, int a) //assuming the inverse is unique. Returns -1 if DNE
+{
+    for(int i = 0;i<vec.size();i++)
+    {
+        if(vec[i] == a)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+set<set<int>> equiv(vector<int> a, vector<int> b, int n)
+{
+    set<set<int>> equiv;
+    set<int> current;
+    vector<bool> seen(a.size(),0);
+    int hold1 = 0;
+    for(int i = 0;i<a.size();i++)
+    {
+        if(seen[i] == 1){cout << i << "seen" << endl;}
+        current.clear();
+        if(seen[i] == 0)
+        {
+            cout<< "ey" << i << endl;
+            seen[i] = 1;
+            current.insert(a[i]);
+            current.insert(b[i]);
+            int tempb = inverse(b,a[i]);
+            int tempa = inverse(a,b[i]);
+            if(tempa >=0){seen[tempa] = 1;}
+            while((tempa >= 0 || tempb >=0) && (tempa != tempb))
+            {
+                //swap the temps to get the equivs
+                tempa = tempa + tempb;
+                tempb = tempa - tempb;
+                tempa = tempa - tempb;
+                if(tempa >= 0){seen[tempa] = 1;}
+                
+                //adding to current set
+                if(tempa>=0){current.insert(a[tempa]);}
+                if(tempb>=0){current.insert(b[tempb]);}
+                
+                //new inverses
+                if(tempa>=0){hold1 = inverse(b,a[tempa]);}
+                else{hold1 = -1;}
+                if(tempb>=0){tempa = inverse(a,b[tempb]);}
+                else{tempa = -1;}
+                tempb = hold1;
+                
+            }
+            equiv.insert(current);
+        }
+    }
+    
+    //putting in the singletons
+    map<int,int> m;
+    for(int i = 0;i<a.size();i++)
+    {
+        m[a[i]]++; m[b[i]]++;
+    }
+    for(int i =0;i<n;i++)
+    {
+        if(m[i] == 0)
+        {
+            set<int> s = {i};
+            equiv.insert(s);
+        }
+    }
+  return equiv;
+}
+
+int main()
+{
+    vector<int> a = {1,5,3,6};
+    vector<int> b = {2,1,0,5};
+    set<set<int>> c = {{1},{2,3,4}};
+    set<set<int>> s = equiv(a,b,7);
+    print(s);
+    return 0;
+}
+
