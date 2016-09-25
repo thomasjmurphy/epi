@@ -1,0 +1,112 @@
+#include<vector>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+using namespace std;
+
+struct node
+{
+    int val;
+    node* next;
+};
+
+void print(node* n)
+{
+    while(n != NULL)
+    {
+        cout << n->val;
+        n=n->next;
+    }
+}
+
+node* merge(node *a, node *b)
+{
+    node* m = NULL;
+    node* swap = NULL;
+    if(a->val <= b->val){m = a;}
+    else{m = b;}
+    
+    node* curr = m;
+    bool done = 0;
+    while(curr != NULL)
+    {
+        done = 0;
+        if(curr == a)
+        {
+            if(a->next == NULL && b == NULL)
+            {
+                curr = NULL;
+                done = 1;
+            }
+            if(a->next == NULL && b != NULL && done == 0)
+            {
+                curr->next = b;    //changes
+                a = NULL;
+                curr = b;
+                done = 1;
+            }
+            if(a != NULL && a->next != NULL && b == NULL && done == 0)
+            {
+                a = a->next;
+                curr = a;       //no changes
+                done = 1;
+            }
+            if(a != NULL && a->next != NULL && b != NULL && a->next->val <= b->val && done == 0)
+            {
+                curr = curr->next; //no changes
+                done = 1;
+            }
+            if(a != NULL && a->next != NULL && b != NULL && a->next->val > b->val && done == 0)
+            {
+                a = a->next;
+                curr->next = b; //changes
+                curr = b;
+                done = 1;
+            }
+        }
+        node* temp = a;
+        a = b;
+        b = temp;
+        
+    }
+return m;
+}
+
+
+int main()
+{
+    node* a1 = new node;
+    node* a2 = new node;
+    node* a3 = new node;
+    node* b1 = new node;
+    node* b2 = new node;
+    node* b3 = new node;
+    
+    a1->val = 1;
+    a2->val = 3;
+    a3->val = 5;
+    b1->val = 2;
+    b2->val = 4;
+    b3->val = 6;
+    
+    a1->next = a2;
+    a2->next = a3;
+    a3->next = NULL;
+    b1->next = b2;
+    b2->next = b3;
+    b3->next = NULL;
+    
+    
+    print(a1);
+    print(b1);
+    print(merge(a1,b1));
+    
+    return 0;
+}
+
+//be careful with if statements containing nexts. use the fact that if statements are
+//read in order and place a check for a == NULL in the front for all of them
