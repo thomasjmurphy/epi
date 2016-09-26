@@ -1,0 +1,100 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+using namespace std;
+
+
+struct node
+{
+    int val;
+    node* next;
+    node(int val) : val(val), next(NULL) {}
+};
+struct p
+{
+    node* n1;
+    node* n2;
+    p(node* n1, node* n2) : n1(n1), n2(n2) {}
+};
+
+void del(node* n)
+{
+    node* toDel = n->next;
+    n->val = n->next->val;
+    n->next = n->next->next;
+    delete toDel;
+}
+
+p reverseOdd(node* head, int n)
+{
+    int count = 0;
+    node* tempR = NULL;
+    node* tempL = head;
+    node* curr = head->next;
+    head->next = NULL;
+    while(count < (n-2)/2)
+    {
+        tempR = curr->next;
+        curr->next = tempL;
+        tempL = curr;
+        curr = tempR;
+        count++;
+    }
+    tempR = curr->next;
+    curr->next = tempL;
+    return p(tempL,tempR); //Note there is a gap here
+}
+
+bool palindrome(node* head)
+{
+    int length = 0;
+    node* curr = head;
+    while(curr != NULL)
+    {
+        curr = curr->next;
+        length++;
+    }
+    p pa = reverseOdd(head,length);
+    node* curr1 = pa.n1;
+    node* curr2 = pa.n2;
+    
+    while(curr1 != NULL)
+    {
+        if(curr1->val != curr2->val)
+        {
+            return false;
+        }
+        curr1 = curr1->next;
+        curr2 = curr2->next;
+    }
+    return true;
+}
+
+int main()
+{
+    node* n0 = new node(0);
+    node* n1 = new node(1);
+    node* n2 = new node(2);
+    node* n3 = new node(1);
+    node* n4 = new node(0);
+    n0->next = n1;
+    n1->next = n2;
+    n2->next = n3;
+    n3->next = n4;
+    n4->next = NULL;
+    
+    print(n0);
+    //print(reverseOdd(n0,5).n1);
+    cout << palindrome(n0);
+    
+    return 0;
+}
+
