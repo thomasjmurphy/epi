@@ -1,0 +1,70 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+using namespace std;
+
+struct node
+{
+    int val;
+    node* next;
+    node(int val) : val(val), next(NULL) {}
+};
+
+node* evenOdd(node* head)
+{
+    int count = 0;
+    node* curr = head;
+    if(curr == NULL){return NULL;}
+    node* temp = NULL;
+    node* firstOdd = head->next;
+    while(curr->next != NULL)
+    {
+        while(curr->next->next != NULL)  //There was an error here. I forgot to put the break in
+        {                               //so the first while loop never terminated. Don't forget the
+        temp = curr->next;              //break when you do a double while loop.
+        curr->next = curr->next->next;
+        curr = temp;
+        count++;
+        }
+        break;
+    }
+    if(count%2 == 1)
+    {
+        temp = curr->next;
+        curr->next = curr->next->next;
+        temp->next = firstOdd;
+    }
+    if(count%2 == 0)
+    {
+        curr->next = firstOdd;
+    }
+    return head;
+}
+
+int main()
+{
+    node* n0 = new node(0);
+    node* n1 = new node(1);
+    node* n2 = new node(2);
+    node* n3 = new node(3);
+    node* n4 = new node(4);
+    n0->next = n1;
+    n1->next = n2;
+    n2->next = n3;
+    n3->next = n4;
+    n4->next = NULL;
+    
+    print(n0);
+    print(evenOdd(n0));
+    
+    return 0;
+}
+
