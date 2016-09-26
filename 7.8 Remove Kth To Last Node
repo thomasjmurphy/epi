@@ -1,0 +1,75 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+using namespace std;
+
+struct node
+{
+    int val;
+    node* next;
+    node(int val) : val(val), next(NULL) {}
+};
+
+void del(node* n)
+{
+    node* toDel = n->next;
+    n->val = n->next->val;
+    n->next = n->next->next;
+    delete toDel;
+}
+
+node* removeKth(node* head, int k) //assuming n is not the last node
+{
+    if(head == NULL)
+    {
+        return NULL;
+    }
+    node* curr1 = head;
+    node* curr2 = head;
+    int count = k;
+    while(count > 0)
+    {
+        curr2 = curr2->next;
+        count--;
+        if(curr2->next == NULL){return NULL;}
+    }
+    while(curr2 != NULL)
+    {
+        curr2 = curr2->next;
+        curr1 = curr1->next;
+    }
+    del(curr1);
+    return head;
+}
+
+int main()
+{
+    node* n0 = new node(0);
+    node* n1 = new node(1);
+    node* n2 = new node(2);
+    node* n3 = new node(3);
+    node* n4 = new node(4);
+    n0->next = n1;
+    n1->next = n2;
+    n2->next = n3;
+    n3->next = n4;
+    n4->next = NULL;
+    
+    print(n0);
+    //del(n2);
+    
+    removeKth(n0,3);
+    print(n0);
+    
+    
+    return 0;
+}
+
