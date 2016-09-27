@@ -1,0 +1,82 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+using namespace std;
+
+
+struct node
+{
+    int val;
+    node* next;
+    node* jump;
+    node(int val) : val(val), next(NULL), jump(NULL) {}
+};
+
+node* copyPostings(node* head)
+{
+    if(head == NULL){return NULL;}
+    if(head->next == NULL){return NULL;}
+    
+    node* temp1 = NULL;
+    node* temp2 = NULL;
+    node* curr = head;
+    node* ret = NULL;
+    while(curr->next != NULL)
+    {
+        temp1 = new node(curr->val);
+        temp2 = curr->next;
+        curr->next = temp1;
+        temp1->next = temp2;
+        curr = temp2;
+    }
+    temp1 = new node(curr->val);
+    curr->next = temp1;
+    ret = head->next;
+    
+    curr = head;
+    while(curr != NULL && curr->next != NULL) //don't forget to check seg faults in the while condition
+    {                                          //even for just one next especially if you were jumping  
+                                                //ahead by 2 nexts in the code
+            curr->next->jump = curr->jump->next;
+            curr = curr->next->next;   
+    }
+    curr = head;
+    while(curr != NULL && curr->next != NULL)
+    {
+        curr->next = curr->next->next;
+        curr = curr->next;
+    }
+    return ret;
+}
+
+int main()
+{
+    node* n1 = new node(1);
+    node* n2 = new node(2);
+    node* n3 = new node(3);
+    node* n4 = new node(4);
+    
+    n1->next = n2;
+    n2->next = n3;
+    n3->next = n4;
+    n4->next = NULL;
+    
+    n1->jump = n3;
+    n2->jump = n4;
+    n3->jump = n2;
+    n4->jump = n4;
+    
+    print(n1);
+    node* n = copyPostings(n1);
+    print(n);
+    return 0;
+}
+
