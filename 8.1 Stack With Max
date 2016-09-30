@@ -1,0 +1,90 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+using namespace std;
+
+void swap(int &a, int &b)
+{
+    if(a == b){return;}
+    a = a+b;
+    b = a-b;
+    a = a-b;
+}
+
+class Stack
+{
+public:
+    int arr[100];
+    int max[100];
+    int top;
+    Stack() : top(-1) {}
+    void push(int a);
+    void pop();
+    bool isEmpty();
+    int getMax();
+    int getTop();
+};
+
+
+void Stack::push(int a)
+{
+    top++;
+    arr[top] = a;
+    max[top] = a;
+    int temp = top;
+    while(temp >= 1 && max[temp] < max[temp-1])
+    {
+        swap(max[temp],max[temp-1]);
+        temp = temp-1;
+    }
+}
+
+void Stack::pop()
+{
+    top--;
+}
+
+int Stack::getMax()
+{
+    if(top >= 0)
+    {
+        return max[top];
+    }
+    return -1;
+}
+
+int Stack::getTop()
+{
+    if(top >= 0)
+    {
+        return arr[top];
+    }
+    return 0;
+}
+bool Stack::isEmpty()
+{
+    if(top == -1){return true;}
+    return false;
+}
+
+int main()
+{
+    Stack s;
+    s.push(1);
+    s.push(3);
+    s.push(4);
+    s.push(2);
+    
+    cout << s.getTop();
+    return 0;
+}
+
+
