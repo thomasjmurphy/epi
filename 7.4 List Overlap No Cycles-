@@ -1,4 +1,5 @@
 #include<vector>
+#include<queue>
 #include<iostream>
 #include<cmath>
 #include<climits>
@@ -6,7 +7,10 @@
 #include<stdexcept>
 #include<string>
 #include<unordered_map>
+#include<map>
+#include"head.h"
 using namespace std;
+
 
 struct node
 {
@@ -15,33 +19,73 @@ struct node
     node(int val) : val(val), next(NULL) {}
 };
 
-node* listOverlap(node* a, node* b)
+node* find(node* a, node* b)
 {
-    int aLength = 0;
-    int bLength = 0;
-    int BLow = 0;
-    int bGuess = 0;
-    int bHigh = 0;
-    node* aTest = a;
-    node* bTest = b;
-    while(aTest != NULL)
+    int count = 0;
+    int L = 0;
+    int R = 0; // R = length-1
+    int mid = 0;
+    node* curra = a;
+    node* currb = b;
+    while(curra->next != NULL)
     {
-        aTest = aTest->next;
-        aLength++;
+        curra = curra->next;
+        R++;
     }
-    while(bTest != NULL)
+    curra = a;
+    mid = L + (R-L)/2;
+    
+    while(R-L > 1)
     {
-        bTest = bTest->next;
-        bLength++;
-    }
-    while(aTest != bTest)
-    {
+        curra = a;
+        count = 0;
+        while(count < mid)
+        {
+            curra = curra->next;
+            count++;
+        }
         
+        while(currb != NULL)
+        {
+            if(curra == currb)
+            {
+                R = mid;
+                mid = L + (R-L)/2;
+                break;
+            }
+            currb = currb->next;
+        }
+        
+        L = mid;
+        mid = L + (R-L)/2;
     }
     
-    
-    
+    //repeat one more time after R-L <= 1/////////////
+    curra = a;
+        count = 0;
+        while(count < mid)
+        {
+            curra = curra->next;
+            count++;
+        }
+        
+        while(currb != NULL)
+        {
+            if(curra == currb)
+            {
+                R = mid;
+                mid = L + (R-L)/2;
+                break;
+            }
+            currb = currb->next;
+        }
+        
+        L = mid;
+        mid = L + (R-L)/2;
+    //Finished Repeat////////////////////
+    return curra;
 }
+
 
 int main()
 {
@@ -50,14 +94,22 @@ int main()
     node* n3 = new node(3);
     node* n4 = new node(4);
     node* n5 = new node(5);
-    node* n6 = new node(6);
+    
+    node* b1 = new node(1);
+    node* b2 = new node(2);
+    node* b3 = new node(3);
+    
     n1->next = n2;
     n2->next = n3;
     n3->next = n4;
     n4->next = n5;
-    n5->next = n6;
-    n6->next = n1;
+    n5->next = NULL;
     
-    cout << medianCircular(n2)->val;
+    b1->next = b2;
+    b2->next = b3;
+    b3->next = n3;
+    
+    print(find(n1,b1));
     return 0;
 }
+
