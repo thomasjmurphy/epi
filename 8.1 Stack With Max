@@ -9,21 +9,14 @@
 #include<unordered_map>
 #include<map>
 #include"head.h"
-using namespace std;
+#include<utility>
 
-void swap(int &a, int &b)
-{
-    if(a == b){return;}
-    a = a+b;
-    b = a-b;
-    a = a-b;
-}
+using namespace std;
 
 class Stack
 {
 public:
-    int arr[100];
-    int max[100];
+    pair<int,int> arr[100];
     int top;
     Stack() : top(-1) {}
     void push(int a);
@@ -33,17 +26,17 @@ public:
     int getTop();
 };
 
-
 void Stack::push(int a)
 {
-    top++;
-    arr[top] = a;
-    max[top] = a;
-    int temp = top;
-    while(temp >= 1 && max[temp] < max[temp-1])
+    if(top >= 0)
     {
-        swap(max[temp],max[temp-1]);
-        temp = temp-1;
+        top++;
+        arr[top] = make_pair(a,max(a,arr[top-1].second));
+    }
+    if(top == -1)
+    {
+        top++;
+        arr[top] = make_pair(a,a); 
     }
 }
 
@@ -56,18 +49,18 @@ int Stack::getMax()
 {
     if(top >= 0)
     {
-        return max[top];
+        return arr[top].second;
     }
-    return -1;
+    abort();
 }
 
 int Stack::getTop()
 {
     if(top >= 0)
     {
-        return arr[top];
+        return arr[top].first;
     }
-    return 0;
+    abort();
 }
 bool Stack::isEmpty()
 {
@@ -83,7 +76,7 @@ int main()
     s.push(4);
     s.push(2);
     
-    cout << s.getTop();
+    cout << s.getMax();
     return 0;
 }
 
