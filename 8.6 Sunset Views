@@ -1,0 +1,77 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+#include<utility>
+
+using namespace std;
+
+template<class T>
+class Stack
+{
+    public:
+    T arr[100];
+    int top;
+    
+    Stack() : top(-1) {}
+    void push(T a)
+    {
+        top++;
+        arr[top] = a;
+    }
+    void pop()
+    {
+        if(top == -1){abort();}
+        top--;
+    }
+    bool isEmpty()
+    {
+        if(top == -1){return true;}
+        else{return false;}
+    }
+    T getTop()
+    {
+        return arr[top];
+    }
+};
+
+vector<int> sunset(vector<int> vec)
+{
+    vector<int> ret;
+    Stack<pair<int,int>> s;
+    for(int i = 0;i<vec.size();i++)
+    {
+        while(!s.isEmpty() && vec[i] > s.getTop().first)
+        {
+            s.pop();
+        }
+        s.push(make_pair(vec[i],i));
+    }
+    while(!s.isEmpty())
+    {
+        ret.push_back(s.getTop().second);
+        s.pop();
+    }
+    return ret;
+}
+    
+
+
+
+
+int main()
+{   
+    vector<int> vec = {1,9,3,5,7,6,5,8,3,2};
+    print(vec);
+    print(sunset(vec));
+    return 0;
+}
+
+
