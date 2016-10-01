@@ -1,0 +1,98 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+#include<utility>
+
+using namespace std;
+
+struct node
+{
+    node* next;
+    node* jump;
+    int val;
+    int order;
+    node(int val) : order(-1), val(val) {}
+};
+
+void postingsOrder(node* n)
+{
+    while(n)
+    {
+        if(n->jump->order == -1)
+        {
+            n->jump->order = n->order+1;
+            n = n->jump;
+        }
+        else
+        {
+            if(n->next)
+            {
+                n->next->order = n->order+1;
+                n = n->next;
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
+}
+
+void postingsOrderRec(node* n)
+{
+    if(!n){return;}
+    if(n->jump->order == -1)
+    {
+        n->jump->order = n->order+1;
+        postingsOrderRec(n->jump);
+    }
+    else
+    {
+        if(n->next)
+        {
+            n->next->order = n->order+1;
+            postingsOrderRec(n->next);
+        }
+        else
+        {
+            return;  //end of list
+        }
+    }
+}
+
+
+
+int main()
+{
+    node* n1 = new node(1);
+    node* n2 = new node(2);
+    node* n3 = new node(3);
+    node* n4 = new node(4);
+    
+    n1->next = n2;
+    n2->next = n3;
+    n3->next = n4;
+    n4->next = NULL;
+    
+    n1->jump = n3;
+    n2->jump = n4;
+    n3->jump = n1;
+    n4->jump = n4;
+    
+    print(n1);
+    n1->order = 1;
+    postingsOrder(n1);
+    print(n1);
+    
+    return 0;
+}
+
+
