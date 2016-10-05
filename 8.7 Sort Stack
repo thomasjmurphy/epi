@@ -1,0 +1,56 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+#include<utility>
+
+using namespace std;
+
+void sortStack(Stack &s)
+{
+    if(s.isEmpty()){return;}
+    int temp;
+    Stack t;
+    t.push(s.getTop());
+    s.pop();
+    while(!s.isEmpty())
+    {
+        temp = s.getTop();
+        s.pop();
+        while(!t.isEmpty() && temp < t.getTop())
+        {
+            s.push(t.getTop());
+            t.pop();
+        }
+        t.push(temp);
+    }
+    while(!t.isEmpty())
+    {
+        s.push(t.getTop());
+        t.pop();
+    }
+}
+
+
+
+int main()
+{   
+    Stack s;
+    s.push(1);
+    s.push(2);
+    s.push(3);
+    s.push(4);
+    print(s);
+    sortStack(s);
+    print(s);
+    return 0;
+}
+
+
