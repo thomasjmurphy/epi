@@ -1,0 +1,102 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+#include<utility>
+
+using namespace std;
+
+class Stack
+{
+public:
+    int* arr;
+    int top;
+    int size;
+    Stack() : top(-1) {}
+    Stack(int size) : top(-1), size(size) {arr = new int[size];}
+    void push(int a)
+    {
+        top++;
+        arr[top] = a;
+    }
+    void pop()
+    {
+        if(top == -1){abort();}
+        top--;
+    }
+    bool isEmpty()
+    {
+        if(top == -1)
+        {
+            return true;
+        }
+        return false;
+    }
+};
+
+class Queue
+{
+public:
+    Stack s1;
+    Stack s2;
+    
+    
+    Queue(int size) {s1 = Stack(size); s2 = Stack(size);}
+    
+    int front()
+    {
+        return s1.arr[s1.top];
+    }
+    void push(int a)
+    {
+        if(s1.isEmpty() && s2.isEmpty())
+        {
+            s1.push(a);
+        }
+        else
+        {
+            s2.push(a);
+        }
+       
+    }
+    void pop()
+    {
+        if(!s1.isEmpty())
+        {
+            s1.pop();
+        }
+        
+        if(s1.isEmpty())
+        {
+            if(s2.isEmpty()){abort();}
+            while(!s2.isEmpty())
+            {
+                s1.push(s2.arr[s2.top]);
+                s2.pop();
+            }
+            s1.pop();
+        }
+    }
+};
+
+int main()
+{   
+    Queue q(10);
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    q.push(4);
+    cout << q.front();
+    
+    
+    return 0;
+}
+
+
