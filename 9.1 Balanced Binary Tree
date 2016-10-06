@@ -1,0 +1,58 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+#include<utility>
+
+using namespace std;
+
+struct tree
+{
+    int val;
+    tree* left;
+    tree* right;
+    tree(int val) : val(val), left(NULL), right(NULL) {}
+};
+
+int height(tree* root)
+{
+    if(!root){return 0;}
+    return max(height(root->left),height(root->right))+1;
+}
+
+bool isBalanced(tree* root)
+{
+    if(!root){return true;}
+    if(abs(height(root->left) - height(root->right)) > 1)
+    {
+        return false;
+    }
+    return isBalanced(root->left) && isBalanced(root->right);
+}
+
+int main()
+{   
+    tree* t1 = new tree(1);
+    tree* t2 = new tree(2);
+    tree* t3 = new tree(3);
+    tree* t4 = new tree(4);
+    tree* t5 = new tree(5);
+    
+    t1->left = t2;
+    t2->left = t4;
+    //t4->left = t5;
+   
+    t1->right = t3;
+    cout << isBalanced(t1);
+    
+    return 0;
+}
+
+
