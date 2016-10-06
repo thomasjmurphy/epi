@@ -1,0 +1,138 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+#include<utility>
+
+using namespace std;
+
+template<class T>
+class Stack
+{
+public:
+    T* arr;
+    int top;
+    int size;
+    Stack() : top(-1) {}
+    Stack(int size) : top(-1), size(size) {arr = new T[size];}
+    void push(T a)
+    {
+        top++;
+        arr[top] = a;
+    }
+    void pop()
+    {
+        if(top == -1){abort();}
+        top--;
+    }
+    bool isEmpty()
+    {
+        if(top == -1)
+        {
+            return true;
+        }
+        return false;
+    }
+};
+
+class Queue
+{
+public:
+    Stack<pair<int,int>> s1;
+    Stack<pair<int,int>> s2;
+    
+    Queue(int size) {s1 = Stack<pair<int,int>>(size); s2 = Stack<pair<int,int>>(size);}
+    
+    int max()
+    {
+        return std::max(s1.arr[s1.top].second, s2.arr[s2.top].second);
+    }
+    int front()
+    {
+        return s1.arr[s1.top].first;
+    }
+    void push(int a)
+    {
+        if(s1.isEmpty() && s2.isEmpty())
+        {
+            s1.push(make_pair(a,a));
+            s1.top++;
+        }
+        else
+        {
+            if(s2.isEmpty())
+            {
+                s2.push(make_pair(a,a));
+            }
+            if(!s2.isEmpty())
+            {
+                if(a > s2.arr[s2.top].second)
+                {
+                    s2.push(make_pair(a,a));
+                }
+                else
+                {
+                    s2.push(make_pair(a,s2.arr[s2.top-1].second));
+                }
+            }
+            s2.top++;
+        }
+      
+    }
+    void pop()
+    {
+        if(!s1.isEmpty())
+        {
+            s1.pop();
+            s1.top--;
+        }
+        
+        if(s1.isEmpty())
+        {
+            if(s2.isEmpty()){abort();}
+            
+            s1.push(make_pair(s2.arr[s2.top].first,s2.arr[s2.top].first));
+            s2.pop();
+            
+            while(!s2.isEmpty())
+            {
+                if(s2.arr[s2.top].second > s1.arr[s1.top].second)
+                {
+                    s1.push(make_pair(s2.arr[s2.top].first,s2.arr[s2.top].first));
+                    s2.pop();
+                }
+                else
+                {
+                    s1.push(make_pair(s2.arr[s2.top].first,s2.arr[s2.top-1].second));
+                    s2.pop();
+                }
+            }
+            s1.pop();
+        }
+    }
+};
+
+int main()
+{   
+    Queue q(10);
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    q.push(4);
+    cout << q.front();
+    cout << q.max();
+    q.pop();
+    cout << q.front();
+    cout << q.max();
+    
+    return 0;
+}
+
+
