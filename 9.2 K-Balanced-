@@ -1,0 +1,95 @@
+#include<vector>
+#include<queue>
+#include<iostream>
+#include<cmath>
+#include<climits>
+#include<set>
+#include<stdexcept>
+#include<string>
+#include<unordered_map>
+#include<map>
+#include"head.h"
+#include<utility>
+
+using namespace std;
+
+struct tree
+{
+    int val;
+    tree* left;
+    tree* right;
+    tree(int val) : val(val), left(NULL), right(NULL) {}
+};
+
+int num(tree* root)
+{
+    if(!root){return 0;}
+    return num(root->left) + num(root->right) + 1;
+}
+
+bool iskBalanced(tree* root)
+{
+    if(!root){return true;}
+    if(abs(num(root->left) - num(root->right)) > 2)
+    {
+        return false;
+    }
+    else
+    {
+           return true;
+    }
+}
+
+tree* k(tree* root)
+{
+    if(!root){return NULL;}
+    queue<tree*> q;
+    q.push(root);
+    while(!q.empty())
+    {
+        if((!iskBalanced(q.front())) && (iskBalanced(q.front()->left) || (iskBalanced(q.front()->right))))
+        {
+            return q.front();
+        }
+        if(q.front()->left)
+        {
+            q.push(q.front()->left);
+        }
+        if(q.front()->right)
+        {
+            q.push(q.front()->right);
+        }
+        q.pop();
+    }
+    return NULL;
+}
+
+
+
+int main()
+{   
+    tree* t1 = new tree(1);
+    tree* t2 = new tree(2);
+    tree* t3 = new tree(3);
+    tree* t4 = new tree(4);
+    tree* t5 = new tree(5);
+    tree* t6 = new tree(6);
+    
+    t1->left = t2;
+    t2->left = t4;
+    t4->left = t5;
+    t5->left = t6;
+   
+    t1->right = t3;
+    
+    queue<tree*> q;
+    q.push(t1);
+    if((!iskBalanced(q.front())) && (iskBalanced(q.front()->left) || (iskBalanced(q.front()->right))))
+    {
+        cout << q.front()->val;
+    }
+    
+    return 0;
+}
+
+
