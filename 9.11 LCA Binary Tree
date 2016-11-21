@@ -1,0 +1,79 @@
+#include<iostream>
+#include<string>
+//#include"t1.cpp"
+using namespace std;
+
+
+struct node
+{
+int val;
+node* next;
+node(int val) : val(val) , next(NULL) {}
+};
+
+struct tree
+{
+int val;
+tree* left;
+tree* right;
+tree(int val) : val(val) , left(NULL) , right(NULL) {}
+};
+
+void search(tree* root, tree* n, string& t, string s = "")
+{
+    if(n == root){t = s;}
+    if(root){search(root->left,  n, t,s+'L');}
+    if(root){search(root->right, n, t,s+'R');}
+    //if(!root){return s;}
+}
+
+tree* LCA(tree* root, tree* t1, tree* t2)
+{
+    string u1;
+    string u2;
+    search(root, t1, u1);
+    search(root, t2, u2);
+    while(u1[0] == u2[0])
+    {
+        if(u1[0] == 'L')
+        {
+            root = root->left;
+        }
+        else
+        {
+            root = root->right;
+        }
+        u1.erase(0,1);
+        u2.erase(0,1);
+    }
+    return root;
+}
+
+int main()
+{
+tree* t1 = new tree(1);
+tree* t2 = new tree(2);
+tree* t3 = new tree(3);
+tree* t4 = new tree(4);
+tree* t5 = new tree(5);
+tree* t6 = new tree(6);
+tree* t7 = new tree(7);
+    
+t1->left = t2;
+t1->right = t7;
+t2->left = t3;
+t2->right = t5;
+t3->left = t4;
+t7->left = t6;
+
+string u1;
+string u2;
+search(t1,t4,u1);
+search(t1,t5,u2);
+    
+cout << u1 << endl << u2 << endl;
+cout << LCA(t1,t4,t5)->val;
+    
+    
+return 0;
+}
