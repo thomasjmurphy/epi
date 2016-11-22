@@ -1,0 +1,48 @@
+#include<iostream>
+#include<string>
+#include<queue>
+#include<utility>
+#include<vector>
+#include<tuple>
+
+
+using namespace std;
+
+//how to tell the priority queue which value to sort on.
+struct tupleSort
+{
+    bool operator()(tuple<int,int,vector<string>> const & a, tuple<int,int,vector<string>> const & b)
+    {
+        return get<2>(a)[0] < get<2>(b)[0];
+    }
+};
+
+vector<vector<string>> sort(vector<vector<tuple<int,int,vector<string>>>> vec)
+{
+    vector<vector<string>> ret;
+    priority_queue<tuple<int,int,vector<string>>,vector<tuple<int,int,vector<string>>>,tupleSort> q;
+    for(int i = 0; i < vec.size(); i++)
+    {
+        q.emplace(make_tuple(i,vec[i].size()-1,get<2>(vec[i][vec[i].size()-1])));
+    }
+    tuple<int,int,vector<string>> p;
+    
+    while(!q.empty())
+    {
+        p = q.top();
+        if(get<1>(p) > 0)
+        {
+            q.emplace(make_tuple(get<0>(p),get<1>(p)-1,get<2>(vec[get<0>(p)][get<1>(p)-1])));
+        }
+        q.pop();
+        ret.push_back(get<2>(p));
+    }
+    return ret;
+}
+
+
+
+int main()
+{
+return 0;
+}
