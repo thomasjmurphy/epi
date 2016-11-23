@@ -1,3 +1,13 @@
+#include<iostream>
+#include<string>
+#include<queue>
+#include<utility>
+#include<vector>
+#include<tuple>
+
+
+using namespace std;
+
 int cycSorted(vector<int>& vec)
 {
     int l = 0;
