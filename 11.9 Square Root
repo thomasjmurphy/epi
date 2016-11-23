@@ -1,0 +1,31 @@
+#include<iostream>
+#include<string>
+#include<queue>
+#include<utility>
+#include<vector>
+#include<tuple>
+
+
+using namespace std;
+
+double sqrt(int x, double e)
+{
+    double l = 0;
+    double r = x;
+    double m = x/2;
+    while(l < r - e)
+    {
+        if(m*m == x){return m;}
+        if(m*m > x)
+        {
+            r = m;
+            m = l + (r-l)/2;
+        }
+        else
+        {
+            l = m;
+            m = l + (r-l)/2;
+        }
+    }
+    return m;
+}
