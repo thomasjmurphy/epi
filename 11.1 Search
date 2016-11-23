@@ -1,7 +1,7 @@
 int search(vector<int> &vec, int k)
 {
     int l = 0;
-    int r = vec.size();
+    int r = vec.size()-1;
     int m = l + (r-l)/2;
     while(l < r)
     {
