@@ -1,0 +1,50 @@
+#include<iostream>
+#include<string>
+#include<queue>
+#include<utility>
+#include<vector>
+#include<tuple>
+#include<limits>
+#include<cstdlib>
+#include<cmath>
+#include<cstring>
+
+
+
+using namespace std;
+
+
+
+long hash1(vector<long>& board, vector<vector<long>>& randArr)
+{
+    long h = 0;
+    for(int i =0; i< 64;i++)
+    {
+        h = h^randArr[i][board[i]];
+    }
+    return h;
+}
+
+
+int main()
+{    
+    vector<vector<long>> randArr;
+    randArr.resize(64, vector<long>(16,0));
+    for(int i =0;i<64;i++)
+    {
+        for(int j =0; j<16; j++)
+        {
+            randArr[i][j] = (static_cast<long>(rand()) << 32) | (static_cast<long>(rand()));
+        }
+    }
+    
+    vector<long> board;
+    board.resize(64,0);
+    for(int i =0;i<64;i++)
+    {
+        board[i] = static_cast<long>(rand())%16;
+    }
+    
+    cout << hash1(board,randArr);
+return 0;
+}
