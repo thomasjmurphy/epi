@@ -1,0 +1,66 @@
+#include<iostream>
+#include<string>
+#include<queue>
+#include<utility>
+#include<vector>
+#include<tuple>
+#include<limits>
+#include<map>
+
+using namespace std;
+
+struct m1
+{
+    int i = -1;
+};
+
+class User
+{
+public:
+    int id;
+    vector<string> att;
+    User(int id, vector<string>& att) : id(id), att(att) {}
+    bool operator==(User& u)
+    {
+        if(this->att == u.att)
+        {
+            return 1;
+        }
+        return 0;
+    }
+};
+
+void pairUp(vector<User>& vec, vector<pair<User,User>>& pVec)
+{
+    map<vector<string>,m1> m;
+    for(int i =0;i<vec.size();i++)
+    {
+        if(m[vec[i].att].i == -1)
+        {
+            m[vec[i].att].i = i;
+        }
+        else
+        {
+            pVec.push_back(make_pair(vec[i],vec[m[vec[i].att].i]));
+            m[vec[i].att].i = i;
+            
+        }
+    }
+}
+
+int main()
+{
+    vector<string> vec1 = {"a","c"};
+    vector<string> vec2 = {"a","b"};
+    vector<string> vec3 = {"a","b"};
+    User u1(1,vec1);
+    User u2(2,vec2);
+    User u3(3,vec3);
+    vector<User> uVec = {u1,u2,u3};
+    vector<pair<User,User>> pVec;
+    pairUp(uVec,pVec);
+    cout << pVec[0].first.id << endl;
+    cout << (u1 == u2);
+
+return 0;
+}
