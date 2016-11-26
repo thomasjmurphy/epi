@@ -1,0 +1,29 @@
+#include<iostream>
+#include<string>
+#include<queue>
+#include<utility>
+#include<vector>
+#include<tuple>
+#include<limits>
+
+
+using namespace std;
+
+pair<int,int> find(vector<int>& vec) //return (appears twice, appears never)
+{
+    int sum = -vec.size()*(vec.size()+1)/2;
+    int ssum = 0;
+    for(int i = 0; i < vec.size(); i++)
+    {
+        ssum+= -i*i;
+    }
+    for(int i = 0; i < vec.size(); i++)
+    {
+        sum+= vec[i];
+        ssum+= vec[i]*vec[i];
+    }
+    int div = ssum/sum;
+    int t = (sum + div)/2;
+    int m = -(sum) + t;
+    return make_pair(t,m);
+}
