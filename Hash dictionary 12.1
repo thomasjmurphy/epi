@@ -1,0 +1,31 @@
+#include<iostream>
+#include<string>
+#include<queue>
+#include<utility>
+#include<vector>
+#include<tuple>
+#include<limits>
+
+
+using namespace std;
+//int const and const int are identical
+//const parameter is only useful when the variable is passed by reference
+
+int hash(const string& str, const int& mod)
+{
+    int val = 0;
+    const int MULT = 997;
+        
+        for(const char& c : str)
+        {
+            val = (val*MULT + c)%mod;
+        }
+    return val;
+}
+
+int main()
+{
+  
+   
+return 0;
+}
