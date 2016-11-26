@@ -1,0 +1,43 @@
+#include<iostream>
+#include<string>
+#include<queue>
+#include<utility>
+#include<vector>
+#include<tuple>
+#include<limits>
+#include<map>
+
+using namespace std;
+
+struct m1
+{
+    int i = -1; //default constructor gives i = -1
+};
+
+pair<int,int> closest(vector<string>& vec)
+{
+    int min = INT_MAX;
+    pair<int,int> minPair = make_pair(-1,-1);
+    map<string,m1> m;
+    for(int i = 1;i<vec.size();i++)
+    {
+        if(m[vec[i]].i >= 0 && i - m[vec[i]].i < min)
+        {
+            minPair.first  = m[vec[i]].i;
+            minPair.second = i;
+            min = i - m[vec[i]].i;
+        }
+        m[vec[i]].i = i;
+    }
+    if(min == vec.size()-1 && vec[0] != vec[vec.size()-1])
+    {return make_pair(-1,-1);}
+    return minPair;
+}
+
+int main()
+{
+vector<string> vec = {"all","work","and","no","play","makes","for","no","work","no","fun","and","no"};
+  cout << closest(vec).first << "," << closest(vec).second;
+   
+return 0;
+}
